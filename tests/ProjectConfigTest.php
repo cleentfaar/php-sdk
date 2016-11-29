@@ -25,7 +25,6 @@ use Optimizely\Entity\Event;
 use Optimizely\Entity\Experiment;
 use Optimizely\Entity\Group;
 use Optimizely\Entity\Variation;
-use Optimizely\ErrorHandler\NoOpErrorHandler;
 use Optimizely\Exceptions\InvalidAttributeException;
 use Optimizely\Exceptions\InvalidAudienceException;
 use Optimizely\Exceptions\InvalidEventException;
@@ -48,7 +47,7 @@ class ProjectConfigTest extends \PHPUnit_Framework_TestCase
             ->setMethods(array('log'))
             ->getMock();
         // Mock Error handler
-        $this->errorHandlerMock = $this->getMockBuilder(NoOpErrorHandler::class)
+        $this->errorHandlerMock = $this->getMockBuilder('Optimizely\ErrorHandler\NoOpErrorHandler')
             ->setMethods(array('handleError'))
             ->getMock();
 
@@ -58,34 +57,34 @@ class ProjectConfigTest extends \PHPUnit_Framework_TestCase
     public function testInit()
     {
         // Check version
-        $version = new \ReflectionProperty(ProjectConfig::class, '_version');
+        $version = new \ReflectionProperty('Optimizely\ProjectConfig', '_version');
         $version->setAccessible(true);
         $this->assertEquals('2', $version->getValue($this->config));
 
         // Check account ID
-        $accountId = new \ReflectionProperty(ProjectConfig::class, '_accountId');
+        $accountId = new \ReflectionProperty('Optimizely\ProjectConfig', '_accountId');
         $accountId->setAccessible(true);
         $this->assertEquals('1592310167', $accountId->getValue($this->config));
 
         // Check project ID
-        $projectId = new \ReflectionProperty(ProjectConfig::class, '_projectId');
+        $projectId = new \ReflectionProperty('Optimizely\ProjectConfig', '_projectId');
         $projectId->setAccessible(true);
         $this->assertEquals('7720880029', $projectId->getValue($this->config));
 
         // Check revision
-        $revision = new \ReflectionProperty(ProjectConfig::class, '_revision');
+        $revision = new \ReflectionProperty('Optimizely\ProjectConfig', '_revision');
         $revision->setAccessible(true);
         $this->assertEquals('15', $revision->getValue($this->config));
 
         // Check group ID map
-        $groupIdMap = new \ReflectionProperty(ProjectConfig::class, '_groupIdMap');
+        $groupIdMap = new \ReflectionProperty('Optimizely\ProjectConfig', '_groupIdMap');
         $groupIdMap->setAccessible(true);
         $this->assertEquals([
             '7722400015' => $this->config->getGroup('7722400015')
         ], $groupIdMap->getValue($this->config));
 
         // Check experiment key map
-        $experimentKeyMap = new \ReflectionProperty(ProjectConfig::class, '_experimentKeyMap');
+        $experimentKeyMap = new \ReflectionProperty('Optimizely\ProjectConfig', '_experimentKeyMap');
         $experimentKeyMap->setAccessible(true);
         $this->assertEquals([
             'test_experiment' => $this->config->getExperimentFromKey('test_experiment'),
@@ -95,7 +94,7 @@ class ProjectConfigTest extends \PHPUnit_Framework_TestCase
         ], $experimentKeyMap->getValue($this->config));
 
         // Check experiment ID map
-        $experimentIdMap = new \ReflectionProperty(ProjectConfig::class, '_experimentIdMap');
+        $experimentIdMap = new \ReflectionProperty('Optimizely\ProjectConfig', '_experimentIdMap');
         $experimentIdMap->setAccessible(true);
         $this->assertEquals([
             '7716830082' => $this->config->getExperimentFromId('7716830082'),
@@ -105,14 +104,14 @@ class ProjectConfigTest extends \PHPUnit_Framework_TestCase
         ], $experimentIdMap->getValue($this->config));
 
         // Check event key map
-        $eventKeyMap = new \ReflectionProperty(ProjectConfig::class, '_eventKeyMap');
+        $eventKeyMap = new \ReflectionProperty('Optimizely\ProjectConfig', '_eventKeyMap');
         $eventKeyMap->setAccessible(true);
         $this->assertEquals([
             'purchase' => $this->config->getEvent('purchase')
         ], $eventKeyMap->getValue($this->config));
 
         // Check attribute key map
-        $attributeKeyMap = new \ReflectionProperty(ProjectConfig::class, '_attributeKeyMap');
+        $attributeKeyMap = new \ReflectionProperty('Optimizely\ProjectConfig', '_attributeKeyMap');
         $attributeKeyMap->setAccessible(true);
         $this->assertEquals([
             'device_type' => $this->config->getAttribute('device_type'),
@@ -120,14 +119,14 @@ class ProjectConfigTest extends \PHPUnit_Framework_TestCase
         ], $attributeKeyMap->getValue($this->config));
 
         // Check audience ID map
-        $audienceIdMap = new \ReflectionProperty(ProjectConfig::class, '_audienceIdMap');
+        $audienceIdMap = new \ReflectionProperty('Optimizely\ProjectConfig', '_audienceIdMap');
         $audienceIdMap->setAccessible(true);
         $this->assertEquals([
             '7718080042' => $this->config->getAudience('7718080042')
         ], $audienceIdMap->getValue($this->config));
 
         // Check variation key map
-        $variationKeyMap = new \ReflectionProperty(ProjectConfig::class, '_variationKeyMap');
+        $variationKeyMap = new \ReflectionProperty('Optimizely\ProjectConfig', '_variationKeyMap');
         $variationKeyMap->setAccessible(true);
         $this->assertEquals([
             'test_experiment' => [
@@ -149,7 +148,7 @@ class ProjectConfigTest extends \PHPUnit_Framework_TestCase
         ], $variationKeyMap->getValue($this->config));
 
         // Check variation ID map
-        $variationIdMap = new \ReflectionProperty(ProjectConfig::class, '_variationIdMap');
+        $variationIdMap = new \ReflectionProperty('Optimizely\ProjectConfig', '_variationIdMap');
         $variationIdMap->setAccessible(true);
         $this->assertEquals([
             'test_experiment' => [

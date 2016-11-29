@@ -22,7 +22,6 @@ use Optimizely\Bucketer;
 use Optimizely\Entity\Experiment;
 use Optimizely\Entity\Variation;
 use Optimizely\ErrorHandler\NoOpErrorHandler;
-use Optimizely\Logger\NoOpLogger;
 use Optimizely\ProjectConfig;
 
 class BucketerTest extends \PHPUnit_Framework_TestCase
@@ -35,7 +34,7 @@ class BucketerTest extends \PHPUnit_Framework_TestCase
     {
         $this->testUserId = 'testUserId';
         // Mock Logger
-        $this->loggerMock = $this->getMockBuilder(NoOpLogger::class)
+        $this->loggerMock = $this->getMockBuilder('Optimizely\Logger\NoOpLogger')
             ->setMethods(array('log'))
             ->getMock();
         $this->config = new ProjectConfig(DATAFILE, $this->loggerMock, new NoOpErrorHandler());
@@ -48,7 +47,7 @@ class BucketerTest extends \PHPUnit_Framework_TestCase
 
     public function testGenerateBucketValue()
     {
-        $generateBucketValueMethod = new \ReflectionMethod(Bucketer::class, 'generateBucketValue');
+        $generateBucketValueMethod = new \ReflectionMethod('Optimizely\Bucketer', 'generateBucketValue');
         $generateBucketValueMethod->setAccessible(true);
 
         $this->assertEquals(

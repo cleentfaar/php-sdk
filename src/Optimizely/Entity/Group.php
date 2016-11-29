@@ -111,6 +111,8 @@ class Group
      */
     public function setTrafficAllocation($trafficAllocation)
     {
-        $this->_trafficAllocation = ConfigParser::generateMap($trafficAllocation, null, TrafficAllocation::class);
+        $this->_trafficAllocation = ConfigParser::generateMap(
+            $trafficAllocation, null, 'Optimizely\Entity\TrafficAllocation'
+        );
     }
 }

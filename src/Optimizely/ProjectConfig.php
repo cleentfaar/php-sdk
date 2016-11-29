@@ -135,14 +135,18 @@ class ProjectConfig
         $attributes = $config['attributes'];
         $audiences = $config['audiences'];
 
-        $this->_groupIdMap = ConfigParser::generateMap($groups, 'id', Group::class);
-        $this->_experimentKeyMap = ConfigParser::generateMap($experiments, 'key', Experiment::class);
-        $this->_eventKeyMap = ConfigParser::generateMap($events, 'key', Event::class);
-        $this->_attributeKeyMap = ConfigParser::generateMap($attributes, 'key', Attribute::class);
-        $this->_audienceIdMap = ConfigParser::generateMap($audiences, 'id', Audience::class);
+        $this->_groupIdMap = ConfigParser::generateMap($groups, 'id', 'Optimizely\Entity\Group');
+        $this->_experimentKeyMap = ConfigParser::generateMap($experiments, 'key', 'Optimizely\Entity\Experiment');
+        $this->_eventKeyMap = ConfigParser::generateMap($events, 'key', 'Optimizely\Entity\Event');
+        $this->_attributeKeyMap = ConfigParser::generateMap($attributes, 'key', 'Optimizely\Entity\Attribute');
+        $this->_audienceIdMap = ConfigParser::generateMap($audiences, 'id', 'Optimizely\Entity\Audience');
 
         forEach(array_values($this->_groupIdMap) as $group) {
-            $experimentsInGroup = ConfigParser::generateMap($group->getExperiments(), 'key', Experiment::class);
+            $experimentsInGroup = ConfigParser::generateMap(
+                $group->getExperiments(),
+                'key',
+                'Optimizely\Entity\Experiment'
+            );
             forEach(array_values($experimentsInGroup) as $experiment) {
                 $experiment->setGroupId($group->getId());
                 $experiment->setGroupPolicy($group->getPolicy());

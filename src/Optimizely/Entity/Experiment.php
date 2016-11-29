@@ -198,7 +198,7 @@ class Experiment
      */
     public function setVariations($variations)
     {
-        $this->_variations = ConfigParser::generateMap($variations, null, Variation::class);
+        $this->_variations = ConfigParser::generateMap($variations, null, 'Optimizely\Entity\Variation');
     }
 
     /**
@@ -262,7 +262,9 @@ class Experiment
      */
     public function setTrafficAllocation($trafficAllocation)
     {
-        $this->_trafficAllocation = ConfigParser::generateMap($trafficAllocation, null, TrafficAllocation::class);
+        $this->_trafficAllocation = ConfigParser::generateMap(
+            $trafficAllocation, null, 'Optimizely\Entity\TrafficAllocation'
+        );
     }
 
     /**

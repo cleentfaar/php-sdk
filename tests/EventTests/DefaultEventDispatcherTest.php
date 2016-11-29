@@ -16,7 +16,6 @@
  */
 namespace Optimizely\Tests;
 
-use GuzzleHttp\Client as HttpClient;
 use Optimizely\Event\Dispatcher\DefaultEventDispatcher;
 use Optimizely\Event\LogEvent;
 
@@ -44,7 +43,7 @@ class DefaultEventDispatcherTest extends \PHPUnit_Framework_TestCase
             'connect_timeout' => 10
         ];
 
-        $guzzleClientMock = $this->getMockBuilder(HttpClient::class)
+        $guzzleClientMock = $this->getMockBuilder('GuzzleHttp\Client')
             ->getMock();
 
         $guzzleClientMock->expects($this->once())

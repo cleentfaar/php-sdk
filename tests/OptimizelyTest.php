@@ -22,11 +22,9 @@ use Optimizely\Bucketer;
 use Optimizely\ErrorHandler\NoOpErrorHandler;
 use Optimizely\Event\LogEvent;
 use Optimizely\Exceptions\InvalidAttributeException;
-use Optimizely\Logger\NoOpLogger;
 use Optimizely\ProjectConfig;
 use TypeError;
 use Optimizely\ErrorHandler\DefaultErrorHandler;
-use Optimizely\Event\Builder\EventBuilder;
 use Optimizely\Logger\DefaultLogger;
 use Optimizely\Optimizely;
 
@@ -44,7 +42,7 @@ class OptimizelyTest extends \PHPUnit_Framework_TestCase
         $this->datafile = DATAFILE;
 
         // Mock Logger
-        $this->loggerMock = $this->getMockBuilder(NoOpLogger::class)
+        $this->loggerMock = $this->getMockBuilder('Optimizely\Logger\NoOpLogger')
             ->setMethods(array('log'))
             ->getMock();
         $this->optimizelyObject = new Optimizely($this->datafile, null, $this->loggerMock);
@@ -52,7 +50,7 @@ class OptimizelyTest extends \PHPUnit_Framework_TestCase
         $this->projectConfig = new ProjectConfig($this->datafile, $this->loggerMock, new NoOpErrorHandler());
 
         // Mock EventBuilder
-        $this->eventBuilderMock = $this->getMockBuilder(EventBuilder::class)
+        $this->eventBuilderMock = $this->getMockBuilder('Optimizely\Event\Builder\EventBuilder')
             ->setMethods(array('createImpressionEvent', 'createConversionEvent'))
             ->setConstructorArgs(array(new Bucketer($this->loggerMock)))
             ->getMock();
@@ -262,7 +260,7 @@ class OptimizelyTest extends \PHPUnit_Framework_TestCase
             ->method('log')
             ->with(Logger::INFO, 'Not activating user "test_user".');
 
-        $errorHandlerMock = $this->getMockBuilder(NoOpErrorHandler::class)
+        $errorHandlerMock = $this->getMockBuilder('Optimizely\ErrorHandler\NoOpErrorHandler')
             ->setMethods(array('handleError'))
             ->getMock();
         $errorHandlerMock->expects($this->once())
@@ -318,7 +316,7 @@ class OptimizelyTest extends \PHPUnit_Framework_TestCase
                 'Dispatching impression event to URL logx.optimizely.com/decision with params param1=val1&param2=val2.');
 
         $optlyObject = new Optimizely($this->datafile, new ValidEventDispatcher(), $this->loggerMock);
-        $eventBuilder = new \ReflectionProperty(Optimizely::class, '_eventBuilder');
+        $eventBuilder = new \ReflectionProperty('Optimizely\Optimizely', '_eventBuilder');
         $eventBuilder->setAccessible(true);
         $eventBuilder->setValue($optlyObject, $this->eventBuilderMock);
 
@@ -343,7 +341,7 @@ class OptimizelyTest extends \PHPUnit_Framework_TestCase
 
         $optlyObject = new Optimizely($this->datafile, new ValidEventDispatcher(), $this->loggerMock);
 
-        $eventBuilder = new \ReflectionProperty(Optimizely::class, '_eventBuilder');
+        $eventBuilder = new \ReflectionProperty('Optimizely\Optimizely', '_eventBuilder');
         $eventBuilder->setAccessible(true);
         $eventBuilder->setValue($optlyObject, $this->eventBuilderMock);
 
@@ -387,7 +385,7 @@ class OptimizelyTest extends \PHPUnit_Framework_TestCase
 
         $optlyObject = new Optimizely($this->datafile, new ValidEventDispatcher(), $this->loggerMock);
 
-        $eventBuilder = new \ReflectionProperty(Optimizely::class, '_eventBuilder');
+        $eventBuilder = new \ReflectionProperty('Optimizely\Optimizely', '_eventBuilder');
         $eventBuilder->setAccessible(true);
         $eventBuilder->setValue($optlyObject, $this->eventBuilderMock);
 
@@ -412,7 +410,7 @@ class OptimizelyTest extends \PHPUnit_Framework_TestCase
 
         $optlyObject = new Optimizely($this->datafile, new ValidEventDispatcher(), $this->loggerMock);
 
-        $eventBuilder = new \ReflectionProperty(Optimizely::class, '_eventBuilder');
+        $eventBuilder = new \ReflectionProperty('Optimizely\Optimizely', '_eventBuilder');
         $eventBuilder->setAccessible(true);
         $eventBuilder->setValue($optlyObject, $this->eventBuilderMock);
 
@@ -433,7 +431,7 @@ class OptimizelyTest extends \PHPUnit_Framework_TestCase
             ->method('log')
             ->with(Logger::ERROR, 'Provided attributes are in an invalid format.');
 
-        $errorHandlerMock = $this->getMockBuilder(NoOpErrorHandler::class)
+        $errorHandlerMock = $this->getMockBuilder('Optimizely\ErrorHandler\NoOpErrorHandler')
             ->setMethods(array('handleError'))
             ->getMock();
         $errorHandlerMock->expects($this->once())
@@ -501,7 +499,7 @@ class OptimizelyTest extends \PHPUnit_Framework_TestCase
             ->method('log')
             ->with(Logger::ERROR, 'Provided attributes are in an invalid format.');
 
-        $errorHandlerMock = $this->getMockBuilder(NoOpErrorHandler::class)
+        $errorHandlerMock = $this->getMockBuilder('Optimizely\ErrorHandler\NoOpErrorHandler')
             ->setMethods(array('handleError'))
             ->getMock();
         $errorHandlerMock->expects($this->once())
@@ -559,7 +557,7 @@ class OptimizelyTest extends \PHPUnit_Framework_TestCase
 
         $optlyObject = new Optimizely($this->datafile, new ValidEventDispatcher(), $this->loggerMock);
 
-        $eventBuilder = new \ReflectionProperty(Optimizely::class, '_eventBuilder');
+        $eventBuilder = new \ReflectionProperty('Optimizely\Optimizely', '_eventBuilder');
         $eventBuilder->setAccessible(true);
         $eventBuilder->setValue($optlyObject, $this->eventBuilderMock);
 
@@ -609,7 +607,7 @@ class OptimizelyTest extends \PHPUnit_Framework_TestCase
 
         $optlyObject = new Optimizely($this->datafile, new ValidEventDispatcher(), $this->loggerMock);
 
-        $eventBuilder = new \ReflectionProperty(Optimizely::class, '_eventBuilder');
+        $eventBuilder = new \ReflectionProperty('Optimizely\Optimizely', '_eventBuilder');
         $eventBuilder->setAccessible(true);
         $eventBuilder->setValue($optlyObject, $this->eventBuilderMock);
 
@@ -660,7 +658,7 @@ class OptimizelyTest extends \PHPUnit_Framework_TestCase
 
         $optlyObject = new Optimizely($this->datafile, new ValidEventDispatcher(), $this->loggerMock);
 
-        $eventBuilder = new \ReflectionProperty(Optimizely::class, '_eventBuilder');
+        $eventBuilder = new \ReflectionProperty('Optimizely\Optimizely', '_eventBuilder');
         $eventBuilder->setAccessible(true);
         $eventBuilder->setValue($optlyObject, $this->eventBuilderMock);
 
@@ -716,7 +714,7 @@ class OptimizelyTest extends \PHPUnit_Framework_TestCase
 
         $optlyObject = new Optimizely($this->datafile, new ValidEventDispatcher(), $this->loggerMock);
 
-        $eventBuilder = new \ReflectionProperty(Optimizely::class, '_eventBuilder');
+        $eventBuilder = new \ReflectionProperty('Optimizely\Optimizely', '_eventBuilder');
         $eventBuilder->setAccessible(true);
         $eventBuilder->setValue($optlyObject, $this->eventBuilderMock);
 
