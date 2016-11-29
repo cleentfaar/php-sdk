@@ -31,7 +31,6 @@ use Optimizely\Exceptions\InvalidEventException;
 use Optimizely\Exceptions\InvalidExperimentException;
 use Optimizely\Exceptions\InvalidGroupException;
 use Optimizely\Exceptions\InvalidVariationException;
-use Optimizely\Logger\NoOpLogger;
 use Optimizely\ProjectConfig;
 
 class ProjectConfigTest extends \PHPUnit_Framework_TestCase
@@ -43,7 +42,7 @@ class ProjectConfigTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         // Mock Logger
-        $this->loggerMock = $this->getMockBuilder(NoOpLogger::class)
+        $this->loggerMock = $this->getMockBuilder('Optimizely\Logger\NoOpLogger')
             ->setMethods(array('log'))
             ->getMock();
         // Mock Error handler
